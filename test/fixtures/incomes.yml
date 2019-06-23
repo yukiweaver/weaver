@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  icategory: 1
+  inote: MyString
+  idate: 2019-06-23
+  imoney: 1
+  user: one
+
+two:
+  icategory: 1
+  inote: MyString
+  idate: 2019-06-23
+  imoney: 1
+  user: two
