@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_23_025635) do
+ActiveRecord::Schema.define(version: 2019_06_23_030427) do
+
+  create_table "expenses", force: :cascade do |t|
+    t.integer "ecategory_id"
+    t.string "enote"
+    t.date "edate"
+    t.integer "emoney"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "created_at"], name: "index_expenses_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_expenses_on_user_id"
+  end
 
   create_table "incomes", force: :cascade do |t|
     t.integer "icategory"

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ecategory_id: 1
+  enote: MyString
+  edate: 2019-06-23
+  emoney: 1
+  user: one
+
+two:
+  ecategory_id: 1
+  enote: MyString
+  edate: 2019-06-23
+  emoney: 1
+  user: two
