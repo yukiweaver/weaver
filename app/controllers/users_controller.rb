@@ -13,7 +13,11 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
-    # redirect_to new_user_path
+    redirect_to @user
+  end
+
+  def show
+    @user = User.find(params[:id])
   end
 
   private
