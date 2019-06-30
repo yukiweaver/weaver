@@ -4,6 +4,12 @@
     <li class="col">menu01</li>
     <li class="col">menu02</li>
     <li class="col">menu03</li>
+    <% if current_user %>
+    <li class="col">
+      <%= link_to 'ログアウト', logout_path, method: :delete %>
+    </li>
+    <% else %>
     <li class="col">menu04</li>
+    <% end %>
   </ul>
 </div>
