@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       user_id = user.id
       if user.password == params[:password]
         session[:user_id] = user_id
-        redirect_to user
+        redirect_to income_path(user)
       else
         flash.now[:danger] = 'メールアドレス、またはパスワードが間違っています。'
         render 'new'
@@ -24,6 +24,7 @@ class SessionsController < ApplicationController
   # ログアウト処理
   def destroy
     session[:user_id] = nil
+    @current_user = nil
     flash[:info] = 'ログアウトしました。'
     redirect_to root_path
   end
