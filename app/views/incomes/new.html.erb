@@ -1,0 +1,32 @@
+<% provide(:title, '家計簿')%>
+<h1>Income家計簿</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @income, url: '/incomes', method: :post, local: true) do |f| %>
+      <%#= render 'shared/error_messages', object: f.object %>
+      <div class="form-group">
+        <%= f.label :金額 %>
+        <%= f.number_field :imoney, class: 'form-controll' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :カテゴリー %>
+        <%= f.select :icategory, Income.icategories.keys.map, class: 'form-controll' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :メモ %>
+        <%= f.text_field :inote, placeholder: '品名やお店', class: 'form-controll'%>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :日付 %>
+        <%= f.date_select :idate, use_month_numbers: true, default: Date.today, class: 'form-controll' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.submit '保存', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>

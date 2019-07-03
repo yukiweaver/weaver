@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       user_id = user.id
       if user.password == params[:password]
         session[:user_id] = user_id
-        redirect_to income_path(user)
+        redirect_to new_income_path
       else
         flash.now[:danger] = 'メールアドレス、またはパスワードが間違っています。'
         render 'new'
