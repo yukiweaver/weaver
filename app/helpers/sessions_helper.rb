@@ -6,4 +6,9 @@ module SessionsHelper
     end
     return @current_user
   end
+
+  def user_id
+    @user_id = session[:user_id] ? session[:user_id] : nil
+    return @user_id 
+  end
 end
