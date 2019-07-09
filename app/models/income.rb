@@ -9,8 +9,10 @@ class Income < ApplicationRecord
   validates :idate, presence: true
 
   def incorrect_imoney
-    if imoney <= 0
-      errors.add(:imoney, "0より大きい金額を入力してください。")
+    if !imoney.blank?
+      if imoney <= 0
+        errors.add(:imoney, "0より大きい金額を入力してください。")
+      end
     end
   end
 end
