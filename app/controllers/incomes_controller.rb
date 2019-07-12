@@ -1,7 +1,10 @@
 class IncomesController < ApplicationController
+  include IncomesHelper
   def new
-    @income = Income.new
     @user = User.find(user_id)
+    @params = params[:status]
+    @income = Income.new
+    @expense = Expense.new
   end
 
   def create

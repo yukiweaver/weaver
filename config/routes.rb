@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
+  get    '/household',  to: 'incomes#new'
   resources :users
   resources :incomes
+  resources :expenses
 end
