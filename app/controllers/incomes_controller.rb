@@ -3,8 +3,13 @@ class IncomesController < ApplicationController
   def new
     @user = User.find(user_id)
     @params = params[:status]
-    @income = Income.new
-    @expense = Expense.new
+    if @params == 'income'
+      @income = Income.new
+    elsif @params == 'expense'
+      @expense = Expense.new
+    else
+      redirect_to error_path
+    end
   end
 
   def create
@@ -18,14 +23,14 @@ class IncomesController < ApplicationController
     else
       flash[:danger] = "保存に失敗しました。"
     end
-    redirect_to new_income_path
+    redirect_to household_path(user_id: user_id, status: 'income')
   end
 
 
 
 
   private
-    # 収入ストパラ
+    # 収入ストロングパラメーター
     def income_params
       params.require(:income).permit(:imoney, :icategory, :inote, :idate)
     end

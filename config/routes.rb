@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
   get    '/household',  to: 'incomes#new'
+  get    '/error'  ,  to: 'errors#error'
   resources :users
   resources :incomes
   resources :expenses

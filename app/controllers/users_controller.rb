@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:success] = 'アカウント登録しました。'
-      redirect_to income_path(session[:user_id])
+      redirect_to household_path(user_id: session[:user_id], status: 'expense')
     else
       render 'new'
     end

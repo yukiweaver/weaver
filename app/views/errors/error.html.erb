@@ -1,0 +1,6 @@
+<% provide(:title, 'エラー')%>
+<h1>エラー</h1>
+<p>不正なページ遷移です。</p>
+<%= link_to 'トップへ', root_path, class: 'btn btn-primary' if user_id.nil? %>
+<%= link_to '家計簿へ', household_path(user_id: user_id, status: 'expense'), class: 'btn btn-primary' unless user_id.nil? %>
+
