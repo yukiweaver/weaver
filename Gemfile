@@ -7,6 +7,8 @@ ruby '2.5.0'
 gem 'rails', '~> 5.2.3'
 gem 'bootstrap', '~> 4.1.1'
 gem 'jquery-rails'
+gem 'fullcalendar-rails'
+gem 'momentjs-rails'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 # Use Puma as the app server

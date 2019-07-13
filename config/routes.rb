@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'calendars/show'
   # get 'sessions/new'
   # get 'users/new'
   # root 'application#hello'
@@ -11,7 +12,8 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
   get    '/household',  to: 'incomes#new'
-  get    '/error'  ,  to: 'errors#error'
+  get    '/error',  to: 'errors#error'
+  get    '/show',  to:  'calendars#show'
   resources :users
   resources :incomes
   resources :expenses

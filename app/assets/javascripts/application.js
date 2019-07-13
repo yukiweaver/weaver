@@ -11,9 +11,25 @@
 // about supported directives.
 //
 //= require jquery3
+//= require moment
+//= require fullcalendar
 //= require popper
 //= require bootstrap-sprockets
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+// FullCalendarの設定を読み込み、お及びFullCalendarを削除
+$(function () {
+  function eventCalendar() {
+      return $('#calendar').fullCalendar({});
+  };
+  function clearCalendar() {
+      $('#calendar').html('');
+      $(document).on('turbolinks:load', function () {
+        eventCalendar();
+      });
+      $(document).on('turbolinks:before-cache', clearCalendar);
+  };
+});
