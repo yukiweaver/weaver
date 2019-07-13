@@ -1,3 +1,19 @@
 <% provide(:title, 'カレンダー')%>
 <h1>カレンダー</h1>
 <div id="calendar"></div>
+
+
+<%# <script>
+$(function () {
+  function eventCalendar() {
+      return $('#calendar').fullCalendar({});
+  };
+  function clearCalendar() {
+      $('#calendar').html('');
+  };
+  $(document).on('turbolinks:load', function () {
+    eventCalendar();
+  });
+  $(document).on('turbolinks:before-cache', clearCalendar);
+});
+</script> %>
