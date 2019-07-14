@@ -10,6 +10,10 @@ class ExpensesController < ApplicationController
     redirect_to household_path(user_id: user_id, status: 'expense')
   end
 
+  def index
+    @expenses = Expense.all
+  end
+
 
   private
     # 支出ストロングパラメーター
