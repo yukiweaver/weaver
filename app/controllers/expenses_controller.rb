@@ -10,6 +10,19 @@ class ExpensesController < ApplicationController
     redirect_to household_path(user_id: user_id, status: 'expense')
   end
 
+  def index
+    @expenses = Expense.all
+    # respond_to do |format|
+    #   format.any
+    #   format.json {
+    #     render json:
+    #     @expenses.to_json(
+    #       only: [:emoney, :edate, :enote]
+    #     )
+    #   }
+    # end
+  end
+
 
   private
     # 支出ストロングパラメーター
