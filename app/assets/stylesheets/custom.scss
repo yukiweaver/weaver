@@ -127,9 +127,21 @@ input {
   }
 }
 
-// .field_with_errors {
-//   @extend .has-error;
-//   .form-control {
-//     color: $state-danger-text;
-//   }
-// }
+// カレンダー
+#calendar {
+	max-width: 500px;
+	margin: 0 auto;
+}
+
+.fc-basic-view .fc-body .fc-row {
+	min-height: 1em !important;
+}
+
+.fc button {
+	height: 2em !important;
+	padding: 0 .1em !important;
+
+	/* text & cursor */
+	font-size: 0.8em !important;
+}
+// カレンダー　ここまで
