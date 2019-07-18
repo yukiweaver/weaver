@@ -13,7 +13,7 @@ class ExpensesController < ApplicationController
 
   # 支出カレンダーページ
   def index
-    @expenses = Expense.where(user_id: user_id).select(:edate, :emoney)
+    @expenses = Expense.where(user_id: user_id).select(:id, :user_id, :edate, :emoney)
     # RelationからArrayに変換（多次元配列）
     @expenses_data = @expenses.map {|item| [item]}
     @expenses_data.each do |expense|
@@ -31,7 +31,15 @@ class ExpensesController < ApplicationController
         values.clear
       end
     end
-    # binding.pry
+
+    @current_day = Date.today
+    @last_month = @current_day.prev_month  #@current_dayからひと月前
+    @next_month = @current_day.next_month  #@current_dayからひと月先
+    @first_day = @current_day.beginning_of_month  #月初
+    @last_day = @current_day.end_of_month  #月末
+    @month_expenses = Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", @first_day, @last_day)
+    
+    
   end
 
 

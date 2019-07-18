@@ -1,3 +1,37 @@
 <% provide(:title, 'カレンダー')%>
 <h1>カレンダー</h1>
 <div id="calendar"></div>
+<div class="row">
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th><%= link_to '⬅︎', '#', class: 'btn' %></th>
+        <th>2019年7月データ</th>
+        <th><%= link_to '➡︎', '#', class: 'btn' %></th>
+      </tr>
+      <tr>
+        <th>収入</th>
+        <th>支出</th>
+        <th>合計</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>100000円</td>
+        <td>15000円</td>
+        <td>95000円</td>
+      </tr>      
+    </tbody>
+  </table>
+
+  <table class="table table-bordered table-striped table-condensed">
+    <tbody>
+      <tr>
+        <td>7/18</td>
+        <td>食費</td>
+        <td>ラーメン</td>
+        <td>950円</td>
+      </tr>
+    </body>
+  </table>
+</div>
