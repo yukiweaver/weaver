@@ -37,9 +37,38 @@ class ExpensesController < ApplicationController
     @next_month = @current_day.next_month  #@current_dayからひと月先
     @first_day = @current_day.beginning_of_month  #月初
     @last_day = @current_day.end_of_month  #月末
-    @month_expenses = Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", @first_day, @last_day)
-    
-    
+
+    @current_month_expenses = Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", @first_day, @last_day).order(edate: "DESC")
+    @current_month_days = Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", @first_day, @last_day).select(:edate).order(edate: "DESC")
+    @uniq_current_month_days = @current_month_days.pluck(:edate).uniq
+    @array = []
+    @uniq_current_month_days.each do |ucmd|
+      @test = Expense.where(user_id: user_id, edate: ucmd)
+      @array.push(@test)
+    end
+    # binding.pry
+    # @current_month_expenses_array = @current_month_expenses.map {|item| [item]}
+
+    # i = 0
+    # @current_month_expenses.each do |expense|
+    #   expense_values = @current_month_expenses.select {|expense_value| expense_value.edate == expense.edate}
+    #   # binding.pry
+    #   if !expense_values.blank?
+    #     if i > 0
+    #       expense.edate = nil
+    #     end
+    #   end
+    #   # binding.pry
+    #   i += 1
+    #   # binding.pry
+    # end
+    # binding.pry
+    @total_expense_money = 0
+    current_month_incomes = Income.where(user_id: user_id).where("idate >= ? and idate <= ?", @first_day, @last_day).select(:imoney)
+    @total_income_money = 0
+    current_month_incomes.each do |income|
+      @total_income_money += income.imoney
+    end
   end
 
 

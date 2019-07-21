@@ -1,6 +1,6 @@
 module ExpensesHelper
-  def user_id
-    @user_id = session[:user_id] ? session[:user_id] : nil
-    return @user_id 
+  # 収入 - 支出
+  def subtraction(income, expense)
+    income - expense
   end
 end

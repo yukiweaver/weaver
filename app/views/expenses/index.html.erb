@@ -17,21 +17,31 @@
     </thead>
     <tbody>
       <tr>
-        <td>100000円</td>
-        <td>15000円</td>
-        <td>95000円</td>
+        <td><%= @total_income_money %>円</td>
+        <td><%= @total_expense_money %>円</td>
+        <td><%= subtraction(@total_income_money, @total_expense_money) %>円</td>
       </tr>      
     </tbody>
   </table>
 
   <table class="table table-bordered table-striped table-condensed">
     <tbody>
+    <%# @current_month_expenses.each do |expense| %>
+    <%# @uniq_current_month_days.each do |ucmd| %>
+    <% @array.each do |cme| %>
       <tr>
-        <td>7/18</td>
-        <td>食費</td>
-        <td>ラーメン</td>
-        <td>950円</td>
+        <th><%= cme[0]['edate'] %></th>
       </tr>
+        <% cme.each do |value|%>
+        <%# binding.pry %>
+          <tr>
+            <td><%= value['ecategory_id'] %></td>
+            <td><%= value['enote'] %></td>
+            <td><%= value['emoney'] %>円</td>
+          </tr>
+        <% end %>
+    <% end %>
+    <%# end %>
     </body>
   </table>
 </div>
