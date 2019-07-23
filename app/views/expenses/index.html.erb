@@ -26,14 +26,11 @@
 
   <table class="table table-bordered table-striped table-condensed">
     <tbody>
-    <%# @current_month_expenses.each do |expense| %>
-    <%# @uniq_current_month_days.each do |ucmd| %>
-    <% @array.each do |cme| %>
+    <% @expenses_table_data.each do |etd| %>
       <tr>
-        <th><%= cme[0]['edate'] %></th>
+        <th><%= etd[0]['edate'] %></th>
       </tr>
-        <% cme.each do |value|%>
-        <%# binding.pry %>
+        <% etd.each do |value|%>
           <tr>
             <td><%= value['ecategory_id'] %></td>
             <td><%= value['enote'] %></td>
@@ -41,7 +38,6 @@
           </tr>
         <% end %>
     <% end %>
-    <%# end %>
     </body>
   </table>
 </div>

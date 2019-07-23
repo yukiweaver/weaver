@@ -38,36 +38,25 @@ class ExpensesController < ApplicationController
     @first_day = @current_day.beginning_of_month  #月初
     @last_day = @current_day.end_of_month  #月末
 
-    @current_month_expenses = Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", @first_day, @last_day).order(edate: "DESC")
-    @current_month_days = Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", @first_day, @last_day).select(:edate).order(edate: "DESC")
-    @uniq_current_month_days = @current_month_days.pluck(:edate).uniq
-    @array = []
-    @uniq_current_month_days.each do |ucmd|
-      @test = Expense.where(user_id: user_id, edate: ucmd)
-      @array.push(@test)
+    # 指定の月の日付のみを配列で取得
+    current_month_expenses = Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", @first_day, @last_day).select(:edate, :emoney).order(edate: "DESC")
+    uniq_current_month_days = current_month_expenses.pluck(:edate).uniq
+    # 多次元配列で取得
+    @expenses_table_data = []
+    uniq_current_month_days.each do |ucmd|
+      expenses = Expense.where(user_id: user_id, edate: ucmd)
+      @expenses_table_data.push(expenses)
     end
-    # binding.pry
-    # @current_month_expenses_array = @current_month_expenses.map {|item| [item]}
 
-    # i = 0
-    # @current_month_expenses.each do |expense|
-    #   expense_values = @current_month_expenses.select {|expense_value| expense_value.edate == expense.edate}
-    #   # binding.pry
-    #   if !expense_values.blank?
-    #     if i > 0
-    #       expense.edate = nil
-    #     end
-    #   end
-    #   # binding.pry
-    #   i += 1
-    #   # binding.pry
-    # end
-    # binding.pry
-    @total_expense_money = 0
+    # 指定の月の収入と支出の合計取得
     current_month_incomes = Income.where(user_id: user_id).where("idate >= ? and idate <= ?", @first_day, @last_day).select(:imoney)
     @total_income_money = 0
+    @total_expense_money = 0
     current_month_incomes.each do |income|
       @total_income_money += income.imoney
+    end
+    current_month_expenses.each do |expense|
+      @total_expense_money += expense.emoney
     end
   end
 
