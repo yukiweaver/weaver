@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
   get    '/household',  to: 'incomes#new'
   get    '/error',  to: 'errors#error'
+  get    '/graph',  to: 'expenses#graph'
   resources :users
   resources :incomes
   resources :expenses

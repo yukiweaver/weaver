@@ -64,6 +64,9 @@ class ExpensesController < ApplicationController
     end
   end
 
+  def graph
+  end
+
 
   private
     # 支出ストロングパラメーター
