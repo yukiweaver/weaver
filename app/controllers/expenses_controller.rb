@@ -32,7 +32,11 @@ class ExpensesController < ApplicationController
       end
     end
 
-    @current_day = Date.today
+    if params['current_day'].nil?
+      @current_day = Date.today
+    else
+      @current_day = Date.parse(params['current_day'])
+    end
     @last_month = @current_day.prev_month  #@current_dayからひと月前
     @next_month = @current_day.next_month  #@current_dayからひと月先
     @first_day = @current_day.beginning_of_month  #月初
