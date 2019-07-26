@@ -3,8 +3,8 @@
   <ul class="row fixed-top">
     <% if current_user %>
       <li class="col"><%= link_to '入力', household_path(user_id: user_id, status: 'expense') %></li>
-      <li class="col"><%= link_to 'カレンダー', expenses_path %></li>
-      <li class="col"><%= link_to 'グラフ', graph_path %></li>
+      <li class="col"><%= link_to 'カレンダー', expenses_path, data: {"turbolinks" => false} %></li>
+      <li class="col"><%= link_to 'グラフ', graph_path, data: {"turbolinks" => false} %></li>
       <li class="col"><%= link_to 'ログアウト', logout_path, method: :delete %></li>
     <% else %>
     <li class="col">menu01</li>
