@@ -3,6 +3,7 @@ class ExpensesController < ApplicationController
   def create
     @user = User.find(user_id)
     @expense = @user.expenses.build(expense_params)
+    # binding.pry
     if @expense.save
       flash[:success] = "保存しました。"
     else
@@ -92,7 +93,11 @@ class ExpensesController < ApplicationController
     end
     # emoneyで降順並び替え
     gon.arr_month_expenses = arr_month_expenses.sort { |a, b| a[0][:emoney] <=> b[0][:emoney] }.reverse
-    test = gon.arr_month_expenses[0][0][:emoney]
+    # gon.arr_month_expenses[0].push(color: 'test')
+    # binding.pry
+
+    
+    
 
 
     # data = {'food' => 10000, 'eating_out' => 5000}
