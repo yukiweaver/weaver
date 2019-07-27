@@ -5,9 +5,9 @@
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
-        <th><%= link_to '⬅︎', expenses_path(current_day: @last_month), class: 'btn' %></th>
+        <th><%= link_to '⬅︎', expenses_path(current_day: @last_month), class: 'btn', data: {"turbolinks" => false} %></th>
         <th><%= @current_day.year %>年<%= @current_day.month %>月のデータ</th>
-        <th><%= link_to '➡︎', expenses_path(current_day: @next_month), class: 'btn' %></th>
+        <th><%= link_to '➡︎', expenses_path(current_day: @next_month), class: 'btn', data: {"turbolinks" => false} %></th>
       </tr>
       <tr>
         <th>収入</th>

@@ -20,6 +20,7 @@ class ExpensesController < ApplicationController
       total = 0
       # selectで条件に一致すれば配列を返す
       values = @expenses_data.select { |value| value[0][:edate] == expense[0][:edate] }
+      # binding.pry
       if !values.blank?
         values.each { |i| total += i[0][:emoney]}
         expense[0][:emoney] = total.to_i
@@ -65,6 +66,36 @@ class ExpensesController < ApplicationController
   end
 
   def graph
+    if params['current_day'].nil?
+      @current_day = Date.today
+    else
+      @current_day = Date.parse(params['current_day'])
+    end
+    @last_month = @current_day.prev_month  #@current_dayからひと月前
+    @next_month = @current_day.next_month  #@current_dayからひと月先
+    @first_day = @current_day.beginning_of_month  #月初
+    @last_day = @current_day.end_of_month  #月末
+
+    # RelationからArrayへ(多次元配列)
+    arr_month_expenses = get_current_month_expenses.map {|expense| [expense]}
+    arr_month_expenses.each do |ame|
+      total = 0
+      values = arr_month_expenses.select {|value| value[0][:ecategory_id] == ame[0][:ecategory_id]}
+      # binding.pry
+      if !values.blank?
+        values.each {|i| total += i[0][:emoney]}
+        ame[0][:emoney] = total.to_i
+        arr_month_expenses.delete_if {|item| item[0][:ecategory_id] == ame[0][:ecategory_id]}
+        arr_month_expenses.unshift(ame)
+        values.clear
+      end
+    end
+    # emoneyで降順並び替え
+    gon.arr_month_expenses = arr_month_expenses.sort { |a, b| a[0][:emoney] <=> b[0][:emoney] }.reverse
+    test = gon.arr_month_expenses[0][0][:emoney]
+
+
+    # data = {'food' => 10000, 'eating_out' => 5000}
   end
 
 
@@ -72,5 +103,10 @@ class ExpensesController < ApplicationController
     # 支出ストロングパラメーター
     def expense_params
       params.require(:expense).permit(:emoney, :ecategory_id, :enote, :edate)
+    end
+
+    # 指定の月の支出データを取得
+    def get_current_month_expenses
+      Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", @first_day, @last_day).order(:emoney)
     end
 end

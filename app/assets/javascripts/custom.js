@@ -1,33 +1,52 @@
+var expenses_data = gon.arr_month_expenses;
 var pieData = [
   {
-    value: 37,
+    value: expenses_data[0][0]['emoney'],
     color:"#9acce3",
     highlight: "#aadbf2",
-    label: "20代"
+    label: expenses_data[0][0]['ecategory_id']
   },
   {
-    value: 30,
+    value: expenses_data[1][0]['emoney'],
     color: "#70b062",
     highlight: "#7fc170",
-    label: "30代"
+    label: "eating_out"
   },
   {
-    value: 20,
+    value: 2000,
     color: "#dbdf19",
     highlight: "#ecef23",
-    label: "40代"
+    label: "daily_necessities"
   },
   {
-    value: 10,
+    value: 1000,
     color: "#a979ad",
     highlight: "#bb8ebf",
-    label: "おばあちゃん"
+    label: "traffic"
   },
   {
     value: 3,
     color: "#cd5638",
     highlight: "#e2694a",
-    label: "ひろし"
+    label: "clothes"
+  },
+  {
+    value: 0,
+    color: "#cd5638",
+    highlight: "#e2694a",
+    label: "companionship"
+  },
+  {
+    value: 0,
+    color: "#cd5638",
+    highlight: "#e2694a",
+    label: "hobby"
+  },
+  {
+    value: 0,
+    color: "#cd5638",
+    highlight: "#e2694a",
+    label: "other"
   }
 
 ];

@@ -1,9 +1,19 @@
 <% provide(:title, 'グラフ')%>
 <h1>Chart.jsのテスト</h1>
-
-  <div style="width: 50%">
-    <canvas id="pie-chart" height="450" width="600"></canvas>
-  </div>
+<div class="row">
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th><%= link_to '⬅︎', graph_path(current_day: @last_month), class: 'btn', data: {"turbolinks" => false} %></th>
+        <th><%= @current_day.year %>年<%= @current_day.month %>月の支出データ</th>
+        <th><%= link_to '➡︎', graph_path(current_day: @next_month), class: 'btn', data: {"turbolinks" => false} %></th>
+      </tr>
+    </thead>
+  </table>
+</div>
+<div style="width: 50%">
+  <canvas id="pie-chart" height="450" width="600"></canvas>
+</div>
   <%# <div style="width: 70%;float: right;padding: 50px;">
     <ul style="width: 200px;padding: 20px;box-shadow: 1px 1px 4px 1px #ccc;">
       <li class="twenties">20代</li>
