@@ -3,6 +3,9 @@ class ExpensesController < ApplicationController
   def create
     @user = User.find(user_id)
     @expense = @user.expenses.build(expense_params)
+    if @expense.color.blank? || @expense.highlight.blank?
+      insert_color_highlight
+    end
     # binding.pry
     if @expense.save
       flash[:success] = "保存しました。"
@@ -34,10 +37,10 @@ class ExpensesController < ApplicationController
       end
     end
 
-    if params['current_day'].nil?
+    if params[:current_day].nil?
       @current_day = Date.today
     else
-      @current_day = Date.parse(params['current_day'])
+      @current_day = Date.parse(params[:current_day])
     end
     @last_month = @current_day.prev_month  #@current_dayからひと月前
     @next_month = @current_day.next_month  #@current_dayからひと月先
@@ -67,10 +70,10 @@ class ExpensesController < ApplicationController
   end
 
   def graph
-    if params['current_day'].nil?
+    if params[:current_day].nil?
       @current_day = Date.today
     else
-      @current_day = Date.parse(params['current_day'])
+      @current_day = Date.parse(params[:current_day])
     end
     @last_month = @current_day.prev_month  #@current_dayからひと月前
     @next_month = @current_day.next_month  #@current_dayからひと月先
@@ -93,8 +96,6 @@ class ExpensesController < ApplicationController
     end
     # emoneyで降順並び替え
     gon.arr_month_expenses = arr_month_expenses.sort { |a, b| a[0][:emoney] <=> b[0][:emoney] }.reverse
-    # gon.arr_month_expenses[0].push(color: 'test')
-    # binding.pry
 
     
     
@@ -107,11 +108,41 @@ class ExpensesController < ApplicationController
   private
     # 支出ストロングパラメーター
     def expense_params
-      params.require(:expense).permit(:emoney, :ecategory_id, :enote, :edate)
+      params.require(:expense).permit(:emoney, :ecategory_id, :enote, :edate, :color, :highlight)
     end
 
     # 指定の月の支出データを取得
     def get_current_month_expenses
       Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", @first_day, @last_day).order(:emoney)
+    end
+
+    # 支出インサート時にcolor、highlightも一緒に登録する
+    def insert_color_highlight
+      case @expense.ecategory_id
+      when 'food' then
+        @expense.color = "#9acce3"
+        @expense.highlight = "#aadbf2"
+      when 'eating_out' then
+        @expense.color = "#70b062"
+        @expense.highlight = "#7fc170"
+      when 'daily_necessities' then
+        @expense.color = "#dbdf19"
+        @expense.highlight = "#ecef23"
+      when 'traffic' then
+        @expense.color = "#a979ad"
+        @expense.highlight = "#bb8ebf"
+      when 'clothes' then
+        @expense.color = "#cd5638"
+        @expense.highlight = "#e2694a"
+      when 'companionship' then
+        @expense.color = "#FFABCE"
+        @expense.highlight = "#FFBEDA"
+      when 'hobby' then
+        @expense.color = "#222222"
+        @expense.highlight = "#333333"
+      when 'other' then
+        @expense.color = "#AAAAAA"
+        @expense.highlight = "#BBBBBB"
+      end
     end
 end
