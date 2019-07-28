@@ -4,7 +4,7 @@ class ExpensesController < ApplicationController
     @user = User.find(user_id)
     @expense = @user.expenses.build(expense_params)
     if @expense.color.blank? || @expense.highlight.blank?
-      insert_color_highlight
+      insert_color_highlight()
     end
     # binding.pry
     if @expense.save
@@ -73,26 +73,18 @@ class ExpensesController < ApplicationController
     @last_day = @current_day.end_of_month  #月末
 
     # 指定の月の日付のみを配列で取得
-    current_month_expenses = Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", @first_day, @last_day).select(:edate, :emoney).order(edate: "DESC")
-    uniq_current_month_days = current_month_expenses.pluck(:edate).uniq
+    uniq_current_month_days = get_current_month_expenses().select(:edate, :emoney).order(edate: "DESC").pluck(:edate).uniq
+    
     # 多次元配列で取得
     @expenses_table_data = []
     uniq_current_month_days.each do |ucmd|
       expenses = Expense.where(user_id: user_id, edate: ucmd)
       @expenses_table_data.push(expenses)
     end
-    # binding.pry
 
     # 指定の月の収入と支出の合計取得
-    current_month_incomes = Income.where(user_id: user_id).where("idate >= ? and idate <= ?", @first_day, @last_day).select(:imoney)
-    @total_income_money = 0
-    @total_expense_money = 0
-    current_month_incomes.each do |income|
-      @total_income_money += income.imoney
-    end
-    current_month_expenses.each do |expense|
-      @total_expense_money += expense.emoney
-    end
+    @total_income_money = total_current_month_imoney()
+    @total_expense_money = total_current_month_emoney()
   end
 
   # グラフページ
@@ -124,7 +116,7 @@ class ExpensesController < ApplicationController
     end
     # emoneyで降順並び替え
     @arr_month_expenses = gon.arr_month_expenses = arr_month_expenses.sort { |a, b| a[0][:emoney] <=> b[0][:emoney] }.reverse
-    @total_expense_money = total_current_month_emoney
+    @total_expense_money = total_current_month_emoney()
   end
 
 
@@ -139,11 +131,24 @@ class ExpensesController < ApplicationController
       Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", @first_day, @last_day)
     end
 
+    # 指定の月の収入データを取得
+    def get_current_month_incomes
+      Income.where(user_id: user_id).where("idate >= ? and idate <= ?", @first_day, @last_day)
+    end
+
     # 指定の月に使用した支出の総額を取得
     def total_current_month_emoney
       total_money = 0
-      get_current_month_expenses.each do |expense|
+      get_current_month_expenses().each do |expense|
         total_money += expense.emoney
+      end
+      return total_money
+    end
+
+    def total_current_month_imoney
+      total_money = 0
+      get_current_month_incomes().each do |income|
+        total_money += income.imoney
       end
       return total_money
     end
