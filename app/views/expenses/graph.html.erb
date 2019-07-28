@@ -10,16 +10,25 @@
       </tr>
     </thead>
   </table>
+
+  <div style="width: 50%">
+    <canvas id="pie-chart" height="450" width="600"></canvas>
+  </div>
+
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <td>合計</td>
+        <td><%= @total_expense_money %>円</td>
+      </tr>
+      <% @arr_month_expenses.each do |expenses| %>
+        <% expenses.each do |expense| %>
+          <tr>
+            <td><%= expense.ecategory_id %></td>
+            <td><%= expense.emoney %>円</td>
+          </tr>
+        <% end %>
+      <% end %>
+    </thead>
+  </table>
 </div>
-<div style="width: 50%">
-  <canvas id="pie-chart" height="450" width="600"></canvas>
-</div>
-  <%# <div style="width: 70%;float: right;padding: 50px;">
-    <ul style="width: 200px;padding: 20px;box-shadow: 1px 1px 4px 1px #ccc;">
-      <li class="twenties">20代</li>
-      <li class="thirties">30代</li>
-      <li class="forties">40代</li>
-      <li class="grandmother">おばあちゃん</li>
-      <li class="hiroshi">ひろし</li>
-    </ul>
-  </div> %>

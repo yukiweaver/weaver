@@ -15,7 +15,32 @@ class ExpensesController < ApplicationController
     redirect_to household_path(user_id: user_id, status: 'expense')
   end
 
-  # 支出カレンダーページ
+  # 更新
+  def update
+    @user = User.find(user_id)
+    @expense = @user.expenses.find(params[:expense][:id])
+    if @expense.update_attributes(expense_params)
+      flash[:success] = '編集しました。'
+    else
+      flash[:danger] = '編集に失敗しました。'
+    end
+    redirect_to expenses_path
+    # binding.pry
+  end
+
+  # 削除
+  def destroy
+    @user = User.find(user_id)
+    @expense = @user.expenses.find(params[:id])  
+    if @expense.destroy
+      flash[:success] = '削除しました。'
+    else
+      flash[:danger] = '削除に失敗しました。'
+    end
+    redirect_to expenses_path
+  end
+
+  # カレンダーページ
   def index
     @expenses = Expense.where(user_id: user_id).select(:id, :user_id, :edate, :emoney)
     # RelationからArrayに変換（多次元配列）
@@ -56,6 +81,7 @@ class ExpensesController < ApplicationController
       expenses = Expense.where(user_id: user_id, edate: ucmd)
       @expenses_table_data.push(expenses)
     end
+    # binding.pry
 
     # 指定の月の収入と支出の合計取得
     current_month_incomes = Income.where(user_id: user_id).where("idate >= ? and idate <= ?", @first_day, @last_day).select(:imoney)
@@ -69,6 +95,7 @@ class ExpensesController < ApplicationController
     end
   end
 
+  # グラフページ
   def graph
     if params[:current_day].nil?
       @current_day = Date.today
@@ -81,6 +108,7 @@ class ExpensesController < ApplicationController
     @last_day = @current_day.end_of_month  #月末
 
     # RelationからArrayへ(多次元配列)
+    # カテゴリーが同じものの金額を合計して配列へ
     arr_month_expenses = get_current_month_expenses.map {|expense| [expense]}
     arr_month_expenses.each do |ame|
       total = 0
@@ -95,13 +123,8 @@ class ExpensesController < ApplicationController
       end
     end
     # emoneyで降順並び替え
-    gon.arr_month_expenses = arr_month_expenses.sort { |a, b| a[0][:emoney] <=> b[0][:emoney] }.reverse
-
-    
-    
-
-
-    # data = {'food' => 10000, 'eating_out' => 5000}
+    @arr_month_expenses = gon.arr_month_expenses = arr_month_expenses.sort { |a, b| a[0][:emoney] <=> b[0][:emoney] }.reverse
+    @total_expense_money = total_current_month_emoney
   end
 
 
@@ -113,7 +136,16 @@ class ExpensesController < ApplicationController
 
     # 指定の月の支出データを取得
     def get_current_month_expenses
-      Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", @first_day, @last_day).order(:emoney)
+      Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", @first_day, @last_day)
+    end
+
+    # 指定の月に使用した支出の総額を取得
+    def total_current_month_emoney
+      total_money = 0
+      get_current_month_expenses.each do |expense|
+        total_money += expense.emoney
+      end
+      return total_money
     end
 
     # 支出インサート時にcolor、highlightも一緒に登録する

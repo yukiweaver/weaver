@@ -26,18 +26,72 @@
 
   <table class="table table-bordered table-striped table-condensed">
     <tbody>
-    <% @expenses_table_data.each do |etd| %>
+    <% @expenses_table_data.each do |expenses| %>
       <tr>
-        <th><%= etd[0]['edate'] %></th>
+        <th><%= expenses[0]['edate'] %></th>
       </tr>
-        <% etd.each do |value|%>
-          <tr>
-            <td><%= value['ecategory_id'] %></td>
-            <td><%= value['enote'] %></td>
-            <td><%= value['emoney'] %>円</td>
-          </tr>
-        <% end %>
+      <% expenses.each do |expense|%>
+        <tr>
+          <td><%= expense.ecategory_id %></td>
+          <td><%= expense.enote %></td>
+          <td><%= expense.emoney %>円</td>
+          <td>
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#a<%= expense.id %>">編集</button>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
     </body>
   </table>
+
+  <!-- モーダルの設定 -->
+  <% @expenses_table_data.each do |etde| %>
+    <% etde.each do |e| %>
+    <div class="modal fade" id="a<%= e.id %>" tabindex="-1"
+        role="dialog" aria-labelledby="label1" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="label1">編集</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <%= form_with(model: e, url: "/expenses/#{e.id}", method: :patch, local: true) do |f| %>
+              <%#= render 'shared/error_messages', object: f.object %>
+              <%= f.hidden_field :id, :value => e.id %>
+              <div class="form-group">
+                <%= f.label :金額 %>
+                <%= f.number_field :emoney, class: 'form-controll' %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :カテゴリー %>
+                <%= f.select :ecategory_id, Expense.ecategory_ids.keys.map, class: 'form-controll' %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :メモ %>
+                <%= f.text_field :enote, placeholder: '品名やお店', class: 'form-controll'%>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :日付 %>
+                <%= f.date_select :edate, use_month_numbers: true, default: Date.today, class: 'form-controll' %>
+              </div>
+
+              <div class="form-group">
+                <%= f.submit '変更', class: 'btn btn-primary' %>
+              </div>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <%= link_to '削除', expense_path(id: e.id), method: :delete, class: 'btn btn-secondary', data: { confirm: "本当に削除しますか？" } %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  <% end %>
 </div>
