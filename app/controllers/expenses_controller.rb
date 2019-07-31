@@ -1,4 +1,5 @@
 class ExpensesController < ApplicationController
+  include ExpensesHelper
   # 支出　保存処理
   def create
     @user = User.find(user_id)
@@ -114,7 +115,7 @@ class ExpensesController < ApplicationController
         values.clear
       end
     end
-    # emoneyで降順並び替え
+    # emoneyで降順並び替え (gonはjs用)
     @arr_month_expenses = gon.arr_month_expenses = arr_month_expenses.sort { |a, b| a[0][:emoney] <=> b[0][:emoney] }.reverse
     @total_expense_money = total_current_month_emoney()
   end
@@ -153,33 +154,10 @@ class ExpensesController < ApplicationController
       return total_money
     end
 
-    # 支出インサート時にcolor、highlightも一緒に登録する
+    # 支出インサート時にcolor、highlightも一緒に登録するため、データ格納
     def insert_color_highlight
-      case @expense.ecategory_id
-      when 'food' then
-        @expense.color = "#9acce3"
-        @expense.highlight = "#aadbf2"
-      when 'eating_out' then
-        @expense.color = "#70b062"
-        @expense.highlight = "#7fc170"
-      when 'daily_necessities' then
-        @expense.color = "#dbdf19"
-        @expense.highlight = "#ecef23"
-      when 'traffic' then
-        @expense.color = "#a979ad"
-        @expense.highlight = "#bb8ebf"
-      when 'clothes' then
-        @expense.color = "#cd5638"
-        @expense.highlight = "#e2694a"
-      when 'companionship' then
-        @expense.color = "#FFABCE"
-        @expense.highlight = "#FFBEDA"
-      when 'hobby' then
-        @expense.color = "#222222"
-        @expense.highlight = "#333333"
-      when 'other' then
-        @expense.color = "#AAAAAA"
-        @expense.highlight = "#BBBBBB"
-      end
+      category = @expense.ecategory_id
+      @expense.color = COLOR_AND_HIGHLIGHT[category][:color]
+      @expense.highlight = COLOR_AND_HIGHLIGHT[category][:highlight]
     end
 end

@@ -3,4 +3,5 @@ module ExpensesHelper
   def subtraction(income, expense)
     income - expense
   end
+  
 end
