@@ -14,7 +14,7 @@
 
         <div class="form-group">
           <%= f.label :カテゴリー %>
-            <%= f.select :ecategory_id, Expense.ecategory_ids.keys.map, class: 'form-controll' %>
+            <%= f.select :ecategory_id, Expense.ecategory_ids.keys.map {|k| [I18n.t("enums.expense.ecategory_id.#{k}"), k]}, class: 'form-controll' %>
         </div>
 
         <div class="form-group">
@@ -43,7 +43,7 @@
 
         <div class="form-group">
           <%= f.label :カテゴリー %>
-            <%= f.select :icategory, Income.icategories.keys.map, class: 'form-controll' %>
+            <%= f.select :icategory, Income.icategories.keys.map {|m| [I18n.t("enums.income.icategory.#{m}"), m]}, class: 'form-controll' %>
         </div>
 
         <div class="form-group">
