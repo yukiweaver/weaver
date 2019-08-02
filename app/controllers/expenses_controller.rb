@@ -160,10 +160,4 @@ class ExpensesController < ApplicationController
       @expense.color = COLOR_AND_HIGHLIGHT[category][:color]
       @expense.highlight = COLOR_AND_HIGHLIGHT[category][:highlight]
     end
-
-    # カテゴリーを日本語変換
-    # def category_ja_convert
-    #   category = @expense.ecategory_id
-    #   @expense.ecategory_id = CATEGORY_JA_CONVERT[category]
-    # end
 end

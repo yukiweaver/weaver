@@ -13,16 +13,4 @@ class ApplicationController < ActionController::Base
     'hobby' => {:color => '#222222', :highlight => '#333333'},
     'other' => {:color => '#AAAAAA', :highlight => '#BBBBBB'}
   }
-
-  CATEGORY_JA_CONVERT = {
-    'food' => '食費',
-    'eating_out' => '外食費',
-    'daily_necessities' => '日用品',
-    'traffic' => '交通費',
-    'clothes' => '衣服',
-    'companionship' => '交際費',
-    'hobby' => '趣味',
-    'other' => 'その他',
-    'salary' => '給料'
-  }
 end

@@ -24,7 +24,7 @@
       <% @arr_month_expenses.each do |expenses| %>
         <% expenses.each do |expense| %>
           <tr>
-            <td><%= expense.ecategory_id %></td>
+            <td><%= ExpensesHelper::CATEGORY_JA_CONVERT[expense.ecategory_id] %></td>
             <td><%= expense.emoney %>円</td>
           </tr>
         <% end %>
