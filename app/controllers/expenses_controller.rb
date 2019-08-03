@@ -73,7 +73,7 @@ class ExpensesController < ApplicationController
     @first_day = @current_day.beginning_of_month  #月初
     @last_day = @current_day.end_of_month  #月末
 
-    # 指定の月の日付のみを配列で取得
+    # 指定の月の日付とお金のみをユニークで配列で取得
     uniq_current_month_days = get_current_month_expenses().select(:edate, :emoney).order(edate: "DESC").pluck(:edate).uniq
     
     # 多次元配列で取得
@@ -102,7 +102,7 @@ class ExpensesController < ApplicationController
 
     # RelationからArrayへ(多次元配列)
     # カテゴリーが同じものの金額を合計して配列へ
-    arr_month_expenses = get_current_month_expenses.map {|expense| [expense]}
+    arr_month_expenses = get_current_month_expenses().map {|expense| [expense]}
     arr_month_expenses.each do |ame|
       total = 0
       values = arr_month_expenses.select {|value| value[0][:ecategory_id] == ame[0][:ecategory_id]}
@@ -121,6 +121,41 @@ class ExpensesController < ApplicationController
   end
 
   def bar_graph
+    data = {'5' => '80605', '6' => '78651', '7' => '157343'}
+    #　特定の月の収入と支出の合計
+    data2 = {
+      '5' => {'income' => 200000, 'expense' => 150000},
+      '6' => {'income' => 200000, 'expense' => 170000}
+    }
+
+    # 日付を配列でユニークで取得後、フォーマットを年月に文字列変換 -> そこからさらにユニークで配列取得
+    array = []
+    uniq_days = Expense.where(user_id: user_id).select(:edate).order(:edate).pluck(:edate).uniq
+    uniq_days.each do |day|
+      str_month = day.strftime("%Y/%m/")
+      array.push(str_month)
+    end
+    uniq_months = array.uniq
+
+    total_month_expenses = []
+    uniq_months.each do |month|
+      first_day = Date.parse("#{month}/01")
+      last_day = first_day.end_of_month
+      expenses = Expense.where(user_id: user_id).where("edate >= ? and edate <= ?", first_day, last_day).select(:edate, :emoney).order(:edate)
+      total_month_expenses.push(expenses)
+      # binding.pry
+    end
+
+    # 月ごとの支出額の合計を配列で取得  例：[20000, 40000, 55555] 左から月の昇順で並んでいる
+    month_total_emoney = []
+    total_month_expenses.each do |tme|
+      total = 0
+      tme.each do |t|
+        total += t[:emoney]
+      end
+      month_total_emoney.push(total.to_i)
+    end
+    # binding.pry
   end
 
 
