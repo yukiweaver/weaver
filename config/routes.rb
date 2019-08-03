@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get    '/household',  to: 'incomes#new'
   get    '/error',  to: 'errors#error'
   get    '/graph',  to: 'expenses#graph'
+  get    '/bar_graph', to: 'expenses#bar_graph'
   resources :users
   resources :incomes
   resources :expenses

@@ -88,7 +88,7 @@ class ExpensesController < ApplicationController
     @total_expense_money = total_current_month_emoney()
   end
 
-  # グラフページ
+  # 支出グラフページ
   def graph
     if params[:current_day].nil?
       @current_day = Date.today
@@ -118,6 +118,9 @@ class ExpensesController < ApplicationController
     # emoneyで降順並び替え (gonはjs用)
     @arr_month_expenses = gon.arr_month_expenses = arr_month_expenses.sort { |a, b| a[0][:emoney] <=> b[0][:emoney] }.reverse
     @total_expense_money = total_current_month_emoney()
+  end
+
+  def bar_graph
   end
 
 
