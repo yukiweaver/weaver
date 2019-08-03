@@ -21,7 +21,7 @@ class ExpensesController < ApplicationController
     @user = User.find(user_id)
     @expense = @user.expenses.find(params[:expense][:id])
     if @expense.update_attributes(expense_params)
-      flash[:success] = '編集しました。'
+      flash[:success] = '更新しました。'
     else
       flash[:danger] = '編集に失敗しました。'
     end
