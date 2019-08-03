@@ -127,6 +127,10 @@ class ExpensesController < ApplicationController
       '5' => {'income' => 200000, 'expense' => 150000},
       '6' => {'income' => 200000, 'expense' => 170000}
     }
+    data3 = {
+      '5' => [200000, 150000],
+      '6' => [200000, 170000]
+    }
 
     # 日付を配列でユニークで取得後、フォーマットを年月に文字列変換 -> そこからさらにユニークで配列取得
     array = []
@@ -155,6 +159,9 @@ class ExpensesController < ApplicationController
       end
       month_total_emoney.push(total.to_i)
     end
+
+    month_total_imoney = [[190000], [200000], [189000]]
+    
     # binding.pry
   end
 
