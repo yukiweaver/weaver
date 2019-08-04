@@ -214,12 +214,10 @@ class ExpensesController < ApplicationController
       month_saving[key] = saving
     end
     
-    total_saving = {}
+    # 合計の貯金額をハッシュで取得
     total = 0
-    month_saving.each do |key, value|
-      total += value
-      total_saving[key] = total
-    end
+    total_saving = month_saving.map {|key, value| key = key, value = (total += value)}.to_h
+    # jsはハッシュ対応していないので、配列に変換
     gon.total_saving = total_saving.to_a
     # binding.pry
   end
