@@ -13,10 +13,9 @@ var barChartData = {
       strokeColor : /*"#d685b0"*/"rgba(214,133,176,0.7)",
       highlightFill: /*"#eebdcb"*/"rgba(238,189,203,0.7)",
       highlightStroke: /*"#eebdcb"*/"rgba(238,189,203,0.7)",
-      data : data
+      data : data,
     },
   ]
-
 }
 window.onload = function(){
   var ctx = document.getElementById("chart").getContext("2d");

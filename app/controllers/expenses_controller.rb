@@ -121,17 +121,6 @@ class ExpensesController < ApplicationController
   end
 
   def bar_graph
-    data = {'5' => '80605', '6' => '78651', '7' => '157343'}
-    #　特定の月の収入と支出の合計
-    data2 = {
-      '5' => {'income' => 200000, 'expense' => 150000},
-      '6' => {'income' => 200000, 'expense' => 170000}
-    }
-    data3 = {
-      '5' => [200000, 150000],
-      '6' => [200000, 170000]
-    }
-
     # 支出：日付を配列でユニークで取得後、フォーマットを年月に文字列変換 -> そこからさらにユニークで配列取得
     array = []
     uniq_days = Expense.where(user_id: user_id).select(:edate).order(:edate).pluck(:edate).uniq
