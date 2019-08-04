@@ -1,12 +1,19 @@
+var total_saving = gon.total_saving;
+var labels = [];
+var data = [];
+total_saving.forEach(function( value ) {
+  labels.push(value[0]);
+  data.push(value[1]);
+});
 var barChartData = {
-  labels : ["2月","3月","4月","5月","6月","7月","8月"],
+  labels : labels,
   datasets : [
     {
       fillColor : /*"#d685b0"*/"rgba(214,133,176,0.7)",
       strokeColor : /*"#d685b0"*/"rgba(214,133,176,0.7)",
       highlightFill: /*"#eebdcb"*/"rgba(238,189,203,0.7)",
       highlightStroke: /*"#eebdcb"*/"rgba(238,189,203,0.7)",
-      data : [0,0,0,0,50000,75000,100000]
+      data : data
     },
   ]
 

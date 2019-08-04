@@ -132,7 +132,7 @@ class ExpensesController < ApplicationController
       '6' => [200000, 170000]
     }
 
-    # 日付を配列でユニークで取得後、フォーマットを年月に文字列変換 -> そこからさらにユニークで配列取得
+    # 支出：日付を配列でユニークで取得後、フォーマットを年月に文字列変換 -> そこからさらにユニークで配列取得
     array = []
     uniq_days = Expense.where(user_id: user_id).select(:edate).order(:edate).pluck(:edate).uniq
     uniq_days.each do |day|
@@ -150,18 +150,77 @@ class ExpensesController < ApplicationController
       # binding.pry
     end
 
-    # 月ごとの支出額の合計を配列で取得  例：[20000, 40000, 55555] 左から月の昇順で並んでいる
-    month_total_emoney = []
+    # 支出：月ごとの支出額の合計をハッシュで取得  例：[20000, 40000, 55555] 左から月の昇順で並んでいる
+    month_total_emoney = {}
     total_month_expenses.each do |tme|
       total = 0
+      month = ""
       tme.each do |t|
-        total += t[:emoney]
+        total += t[:emoney].to_i
+        month = t[:edate].strftime("%Y/%m")
       end
-      month_total_emoney.push(total.to_i)
+      month_total_emoney[month] = {'expense' => total}
     end
 
-    month_total_imoney = [[190000], [200000], [189000]]
+    # 収入：日付を配列でユニークで取得後、フォーマットを年月に文字列変換 -> そこからさらにユニークで配列取得
+    array = []
+    uniq_days = Income.where(user_id: user_id).select(:idate).order(:idate).pluck(:idate).uniq
+    uniq_days.each do |day|
+      str_month = day.strftime("%Y/%m/")
+      array.push(str_month)
+    end
+    uniq_months = array.uniq
+
+    total_month_incomes = []
+    uniq_months.each do |month|
+      first_day = Date.parse("#{month}/01")
+      last_day = first_day.end_of_month
+      incomes = Income.where(user_id: user_id).where("idate >= ? and idate <= ?", first_day, last_day).select(:idate, :imoney).order(:idate)
+      total_month_incomes.push(incomes)
+      # binding.pry
+    end
+
+    # 収入：月ごとの収入額の合計をハッシュで取得
+    month_total_imoney = {}
+    total_month_incomes.each do |tmi|
+      total = 0
+      month = ""
+      tmi.each do |i|
+        total += i[:imoney].to_i
+        month = i[:idate].strftime("%Y/%m")
+      end
+      month_total_imoney[month] = {'income' => total}
+    end
+
+    # 収入と支出のハッシュを結合
+    month_total_money = month_total_imoney.merge(month_total_emoney) {|key, h1v, h2v| month_total_emoney[key] = h1v.merge(h2v)}
+
+    # 収入または支出のデータがない場合は、0を格納
+    month_total_money.each do |key, value|
+      if value['income'].nil?
+        month_total_money[key]['income'] = 0
+      end
+      if value['expense'].nil?
+        month_total_money[key]['expense'] = 0
+      end
+    end
+    # キーでハッシュのままソート(昇順)
+    month_total_money = month_total_money.sort.to_h
+
+    # 月毎の 収入ー支出 をハッシュで取得
+    month_saving = {}
+    month_total_money.each do |key, value|
+      saving = value['income'] - value['expense']
+      month_saving[key] = saving
+    end
     
+    total_saving = {}
+    total = 0
+    month_saving.each do |key, value|
+      total += value
+      total_saving[key] = total
+    end
+    gon.total_saving = total_saving.to_a
     # binding.pry
   end
 
