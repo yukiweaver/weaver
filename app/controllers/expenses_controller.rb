@@ -193,7 +193,7 @@ class ExpensesController < ApplicationController
         month_total_money[key]['expense'] = 0
       end
     end
-    # キーでハッシュのままソート(昇順)
+    # ハッシュのままキーでソート(昇順)
     month_total_money = month_total_money.sort.to_h
 
     # 月毎の 収入ー支出 をハッシュで取得
@@ -208,6 +208,9 @@ class ExpensesController < ApplicationController
     total_saving = month_saving.map {|key, value| key = key, value = (total += value)}.to_h
     # jsはハッシュ対応していないので、配列に変換
     gon.total_saving = total_saving.to_a
+
+    # 合計の貯金額と前月比を同時に取得（ハッシュの中に配列）
+    @all_total_saving = total_saving.merge(month_saving) {|key, h1v, h2v| month_saving[key] = h1v, h2v}.sort.reverse.to_h
     # binding.pry
   end
 
