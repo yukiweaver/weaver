@@ -1,5 +1,6 @@
 class ExpensesController < ApplicationController
   include ExpensesHelper
+  before_action :login_check, only: [:index, :graph, :bar_graph]
   # 支出　保存処理
   def create
     @user = User.find(user_id)

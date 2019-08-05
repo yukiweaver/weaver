@@ -13,4 +13,20 @@ class ApplicationController < ActionController::Base
     'hobby' => {:color => '#222222', :highlight => '#333333'},
     'other' => {:color => '#AAAAAA', :highlight => '#BBBBBB'}
   }
+
+  private
+
+  # ログイン中のみ遷移可能
+  def login_check
+    if user_id.blank?
+      redirect_to root_path
+    end
+  end
+
+  # ログアウト中のみ遷移可能
+  def logout_check
+    unless user_id.blank?
+      redirect_to household_path(user_id: user_id, status: 'expense')
+    end
+  end
 end

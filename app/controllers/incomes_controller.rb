@@ -1,5 +1,6 @@
 class IncomesController < ApplicationController
   include IncomesHelper
+  before_action :login_check, only: [:new]
   def new
     @user = User.find(user_id)
     @params = params[:status]

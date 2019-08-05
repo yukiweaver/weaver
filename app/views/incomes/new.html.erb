@@ -2,8 +2,8 @@
 <h1>家計簿</h1>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= link_to '支出', household_path(@income, :user_id => @user.id, :status => 'expense'), class: "btn btn-sm btn-primary" %>
-    <%= link_to '収入', household_path(@expense, :user_id => @user.id, :status => 'income'), class: "btn btn-sm btn-primary" %>
+    <%= link_to '支出', household_path(@expense, :user_id => @user.id, :status => 'expense'), class: "btn btn-sm btn-primary" %>
+    <%= link_to '収入', household_path(@income, :user_id => @user.id, :status => 'income'), class: "btn btn-sm btn-primary" %>
     <% if @params == 'expense' %>
       <%= form_with(model: @expense, url: '/expenses', method: :post, local: true) do |f| %>
         <%#= render 'shared/error_messages', object: f.object %>
