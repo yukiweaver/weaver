@@ -1,4 +1,14 @@
 ja:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+    attributes:
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
   date:
     order:
     - :year
