@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_27_132830) do
+ActiveRecord::Schema.define(version: 2019_08_12_023502) do
 
   create_table "expenses", force: :cascade do |t|
     t.integer "ecategory_id"
@@ -45,6 +45,10 @@ ActiveRecord::Schema.define(version: 2019_07_27_132830) do
     t.datetime "updated_at", null: false
     t.string "password"
     t.boolean "admin", default: false
+    t.string "provider"
+    t.string "uid"
+    t.string "user_name"
+    t.string "image_url"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
