@@ -26,8 +26,8 @@ class SessionsController < ApplicationController
   def auth_create
     user = User.find_or_create_from_auth(request.env['omniauth.auth'])
     session[:user_id] = user.id
-    flash[:notice] = "ユーザー認証が完了しました。"
-    redirect_to root_path
+    flash[:success] = "ユーザー認証が完了しました。"
+    redirect_to household_path(:user_id => user_id, :status => 'expense')
   end
 
   # ログアウト処理
