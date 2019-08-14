@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  # before_action :logout_check, only: [:new]
+  before_action :logout_check, only: [:new]
   # ログインフォーム root
   def new
   end
