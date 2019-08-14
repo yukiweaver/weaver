@@ -28,7 +28,8 @@ class SessionsController < ApplicationController
     if user.save
       session[:user_id] = user.id
       flash[:success] = "ユーザー認証が完了しました。"
-      redirect_to household_path(:user_id => user_id, :status => 'expense')
+      # redirect_to household_path(:user_id => user_id, :status => 'expense')
+      redirect_to household_path(:status => 'expense')
     else
       flash[:danger] = "ユーザー認証に失敗しました。"
       redirect_to root_path
