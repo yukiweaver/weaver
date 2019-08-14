@@ -23,17 +23,17 @@ class SessionsController < ApplicationController
     end
   end
 
-  def auth_create
-    user = User.find_or_create_from_auth(request.env['omniauth.auth'])
-    if user.save
-      session[:user_id] = user.id
-      flash[:success] = "ユーザー認証が完了しました。"
-      redirect_to household_path(:user_id => user_id, :status => 'expense')
-    else
-      flash[:danger] = "ユーザー認証に失敗しました。"
-      redirect_to root_path
-    end
-  end
+  # def auth_create
+  #   user = User.find_or_create_from_auth(request.env['omniauth.auth'])
+  #   if user.save
+  #     session[:user_id] = user.id
+  #     flash[:success] = "ユーザー認証が完了しました。"
+  #     redirect_to household_path(:user_id => user_id, :status => 'expense')
+  #   else
+  #     flash[:danger] = "ユーザー認証に失敗しました。"
+  #     redirect_to root_path
+  #   end
+  # end
 
   # ログアウト処理
   def destroy
