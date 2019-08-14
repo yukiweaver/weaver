@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get    '/error',  to: 'errors#error'
   get    '/graph',  to: 'expenses#graph'
   get    '/bar_graph', to: 'expenses#bar_graph'
-  # get    '/auth/:provider/callback', to: 'sessions#auth_create'
+  get    '/auth/:provider/callback', to: 'sessions#auth_create'
   resources :users
   resources :incomes
   resources :expenses
