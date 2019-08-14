@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
 
   def auth_create
     user = User.find_or_create_from_auth(request.env['omniauth.auth'])
-    if user.save
+    if user
       session[:user_id] = user.id
       flash[:success] = "ユーザー認証が完了しました。"
       # redirect_to household_path(:user_id => user_id, :status => 'expense')
