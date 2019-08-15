@@ -18,7 +18,8 @@ expenses.forEach(function( expense ) {
   array['label'] = CATEGORY_JA_CONVERT[expense[0]['ecategory_id']];
   pieData.push(array);
 });
-// console.log(pieData);
+console.log(expenses);
+console.log(pieData);
 // var pieData = [
 //   {
 //     value: 3000,

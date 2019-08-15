@@ -14,6 +14,11 @@
   </table>
 
   <div style="width: 50%">
+    <% if @arr_month_expenses.blank? %>
+    <div class="graph-no-data">
+      <p>データがありません</p>
+    </div>
+    <% end %>
     <canvas id="pie-chart" height="450" width="600"></canvas>
   </div>
 

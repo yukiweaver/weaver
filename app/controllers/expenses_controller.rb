@@ -206,12 +206,12 @@ class ExpensesController < ApplicationController
     
     # 合計の貯金額をハッシュで取得
     total = 0
-    total_saving = month_saving.map {|key, value| key = key, value = (total += value)}.to_h
+    @total_saving = month_saving.map {|key, value| key = key, value = (total += value)}.to_h
     # jsはハッシュ対応していないので、配列に変換
-    gon.total_saving = total_saving.to_a
+    gon.total_saving = @total_saving.to_a
 
     # 合計の貯金額と前月比を同時に取得（ハッシュの中に配列）
-    @all_total_saving = total_saving.merge(month_saving) {|key, h1v, h2v| month_saving[key] = h1v, h2v}.sort.reverse.to_h
+    @all_total_saving = @total_saving.merge(month_saving) {|key, h1v, h2v| month_saving[key] = h1v, h2v}.sort.reverse.to_h
     # binding.pry
   end
 
