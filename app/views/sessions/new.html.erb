@@ -14,7 +14,10 @@
     <% end %>
   </div>
 </div>
-<div>
-  <%= link_to '新規登録', '/signup', class: 'btn btn-primary'%>
-  <%= link_to 'twitter認証', '/auth/twitter', class: 'btn btn-primary' %>
+<div style="text-align: center;">
+  <%= link_to '/auth/twitter', class: "btn btn-social btn-twitter" do %>
+  <span class="fa fa-twitter"></span> Twitterアカウントでログイン
+  <% end %>
+  <br>
+  新規登録は<%= link_to 'こちら', '/signup' %>
 </div>
