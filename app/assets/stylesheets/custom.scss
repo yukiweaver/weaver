@@ -31,7 +31,7 @@ p {
 
 body {
   padding-top: 60px;
-  background-color: #f0f3f5;
+  background-color: #f3f5f7;
 	font-family: 'Roboto';
 }
 
@@ -187,9 +187,15 @@ input {
 	color: #fff;
 }
 
-.btn-twitter,
-.btn-twitter:hover {
-	background-color: #00d7fa;
+.btn-twitter-login {
+  background-color: #00d7fa;
+  color: #fff;
+	border-radius: 0px;
+	font-size: 15px;
+}
+
+.btn-twitter-login:hover {
+  background-color: #55acee;
 	color: #fff;
 	border-radius: 0px;
 	font-size: 15px;
@@ -217,7 +223,7 @@ a {
 
 label {
 	text-transform: uppercase;
-	color: #bdc7d4;
+	color: #6a717a;
 }
 
 strong {
@@ -225,15 +231,19 @@ strong {
 }
 
 .form-control {
-    background: none;
+    // background: none;
     height: 40px;
     border: none;
-    border-radius: 0px;
-    box-shadow: none;
+    // border-radius: 0px;
+    // box-shadow: none;
     color: #8b9eb6;
-    padding: 0px;
+    // padding: 0px;
 }
 
 .form-control:focus {
     box-shadow: none;
+}
+
+.modal-content {
+  background-color: #f3f5f7;
 }

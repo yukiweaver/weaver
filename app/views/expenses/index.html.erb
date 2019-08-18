@@ -63,22 +63,22 @@
               <%= f.hidden_field :id, :value => e.id %>
               <div class="form-group">
                 <%= f.label :金額 %>
-                <%= f.number_field :emoney, class: 'form-controll' %>
+                <%= f.number_field :emoney, class: 'form-control', required: true %>
               </div>
 
               <div class="form-group">
                 <%= f.label :カテゴリー %>
-                <%= f.select :ecategory_id, Expense.ecategory_ids.keys.map {|k| [I18n.t("enums.expense.ecategory_id.#{k}"), k]}, class: 'form-controll' %>
+                <%= f.select :ecategory_id, Expense.ecategory_ids.keys.map {|k| [I18n.t("enums.expense.ecategory_id.#{k}"), k]}, {}, class: 'form-control' %>
               </div>
 
               <div class="form-group">
                 <%= f.label :メモ %>
-                <%= f.text_field :enote, placeholder: '品名やお店', class: 'form-controll'%>
+                <%= f.text_field :enote, placeholder: '品名やお店', class: 'form-control'%>
               </div>
 
               <div class="form-group">
                 <%= f.label :日付 %>
-                <%= f.date_select :edate, use_month_numbers: true, default: Date.today, class: 'form-controll' %>
+                <%= f.date_select :edate, {use_month_numbers: true}, {class: 'form-control'} %>
               </div>
 
               <div class="form-group">
