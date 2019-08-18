@@ -7,7 +7,7 @@
         <p>データがありません</p>
       </div>
     <% end %>
-    <canvas id="chart" height="450" width="600"></canvas>
+    <canvas id="myBarChart" height="450" width="600"></canvas>
   </div>
 
   <table class="table table-bordered table-striped table-condensed">
@@ -21,3 +21,45 @@
     </tbody>
   </table>
 </div>
+
+<script>
+var ctx = document.getElementById("myBarChart");
+var total_saving = gon.total_saving;
+var labels = [];
+var data = [];
+  total_saving.forEach(function( value ) {
+    labels.push(value[0]);
+    data.push(value[1]);
+  });
+  var myBarChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: '月時点の貯金額',
+          data: data,
+          backgroundColor: "rgba(219,39,91,0.5)"
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: false,
+        text: '貯金額の合計'
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            suggestedMax: 0,
+            suggestedMin: 0,
+            stepSize: 0,
+            callback: function(value, index, values){
+              return  value +  '円'
+            }
+          }
+        }]
+      },
+    }
+  });
+</script>

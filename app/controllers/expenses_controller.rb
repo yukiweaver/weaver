@@ -119,6 +119,7 @@ class ExpensesController < ApplicationController
     # emoneyで降順並び替え (gonはjs用)
     @arr_month_expenses = gon.arr_month_expenses = arr_month_expenses.sort { |a, b| a[0][:emoney] <=> b[0][:emoney] }.reverse
     @total_expense_money = total_current_month_emoney()
+    # binding.pry
   end
 
   def bar_graph
