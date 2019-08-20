@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get    '/graph',  to: 'expenses#graph'
   get    '/bar_graph', to: 'expenses#bar_graph'
   get    '/auth/:provider/callback', to: 'sessions#create'
+  get    '/use', to: 'users#use'
   resources :users
   resources :incomes
   resources :expenses

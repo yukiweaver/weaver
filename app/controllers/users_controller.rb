@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :logout_check, only: [:new, :show]
-  def home
+  def use
   end
 
   def new
