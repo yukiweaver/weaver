@@ -3,6 +3,9 @@ class UsersController < ApplicationController
   def use
   end
 
+  def description
+  end
+
   def new
     @user = User.new
   end
