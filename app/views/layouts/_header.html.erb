@@ -29,8 +29,8 @@
     <div class="navbar-nav">
       <% if current_user %>
         <%= link_to '入力', household_path(user_id: user_id, status: 'expense'), class: 'nav-item nav-link' %>
-        <%= link_to 'カレンダー', expenses_path, data: {"turbolinks" => false}, class: 'nav-item nav-link' %>
-        <%= link_to 'グラフ', graph_path, data: {"turbolinks" => false}, class: 'nav-item nav-link' %>
+        <%= link_to '収入および支出', expenses_path, data: {"turbolinks" => false}, class: 'nav-item nav-link' %>
+        <%= link_to 'グラフデータ', graph_path, data: {"turbolinks" => false}, class: 'nav-item nav-link' %>
         <%= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-item nav-link' %>
       <% else %>
         <%= link_to 'トップ', root_path, class: 'nav-item nav-link' %>
