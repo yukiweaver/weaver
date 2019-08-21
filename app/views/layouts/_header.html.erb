@@ -1,4 +1,6 @@
 <!-- ヘッダーパーシャル -->
+<header class="sticky-top">
+<!--
 <div class="container-fluid">
   <ul class="row fixed-top">
     <% if current_user %>
@@ -8,4 +10,33 @@
       <li class="col"><%= link_to 'ログアウト', logout_path, method: :delete %></li>
     <% end %>
   </ul>
-</div>
+</div>-->
+<nav class="navbar navbar-dark bg-dark">
+  <% if current_user %>
+  <%= link_to '家計簿Zeny', household_path(user_id: user_id, status: 'expense'), class: 'navbar-brand' %>
+  <% else %>
+  <%= link_to '家計簿Zeny', root_path, class: 'navbar-brand' %>
+  <% end %>
+  <button class="navbar-toggler" type="button"
+      data-toggle="collapse"
+      data-target="#navmenu1"
+      aria-controls="navmenu1"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navmenu1">
+    <div class="navbar-nav">
+      <% if current_user %>
+        <%= link_to '入力', household_path(user_id: user_id, status: 'expense'), class: 'nav-item nav-link' %>
+        <%= link_to 'カレンダー', expenses_path, data: {"turbolinks" => false}, class: 'nav-item nav-link' %>
+        <%= link_to 'グラフ', graph_path, data: {"turbolinks" => false}, class: 'nav-item nav-link' %>
+        <%= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-item nav-link' %>
+      <% else %>
+        <%= link_to 'トップ', root_path, class: 'nav-item nav-link' %>
+        <%= link_to '新規登録', signup_path, class: 'nav-item nav-link' %>
+      <% end %>
+    </div>
+  </div>
+</nav>
+</header>
