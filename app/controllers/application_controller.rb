@@ -29,4 +29,9 @@ class ApplicationController < ActionController::Base
       redirect_to household_path(user_id: user_id, status: 'expense')
     end
   end
+
+  # 日付が有効か検証 問題なければtrueを返す
+  def date_valid?(str)
+    !! Date.parse(str) rescue false
+  end
 end

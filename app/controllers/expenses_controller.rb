@@ -4,6 +4,15 @@ class ExpensesController < ApplicationController
   # 支出　保存処理
   def create
     @user = User.find(user_id)
+    expense = params[:expense]
+    str_date = expense["edate(1i)"] + "-" + expense["edate(2i)"] + "-" + expense["edate(3i)"]
+
+    # 日付が不正か検証
+    if date_valid?(str_date) === false
+      flash[:danger] = "日付が不正です。"
+      redirect_to household_path(user_id: user_id, status: 'expense') and return
+    end
+
     @expense = @user.expenses.build(expense_params)
     if @expense.color.blank? || @expense.highlight.blank?
       insert_color_highlight()
